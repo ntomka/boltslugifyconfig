@@ -1,0 +1,24 @@
+{
+    "name": "ntomka/boltslugifyconfig",
+    "description": "This extension allows users to set custom config for Bolt's slugify service.",
+    "type": "bolt-extension",
+    "keywords": ["slug", "slugify"],
+    "require": {
+        "bolt/bolt": "^3.0"
+    },
+    "authors": [
+        {
+            "name": "Tamás Nagy",
+            "email": "nagy.tomi@gmail.com",
+            "homepage": "https://github.com/ntomka"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bolt\\Extension\\Ntomka\\BoltSlugifyConfig\\": "src"
+        }
+    },
+    "extra": {
+        "bolt-class": "Bolt\\Extension\\Ntomka\\BoltSlugifyConfig\\BoltSlugifyConfigExtension"
+    }
+}
