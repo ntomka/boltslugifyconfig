@@ -3,36 +3,38 @@
 namespace Bolt\Extension\Ntomka\BoltSlugifyConfig;
 
 use Bolt\Extension\SimpleExtension;
+use Cocur\Slugify\Slugify;
+use Silex\Application;
 
+/**
+ * @author Nagy Tamás <nagy.tomi@gmail.com>
+ * @version 2.0.0
+ */
 class BoltSlugifyConfigExtension extends SimpleExtension
 {
-
-    public function boot(\Silex\Application $app)
+    /**
+     * {@inheritdoc}
+     */
+    protected function registerServices(Application $app)
     {
-        parent::boot($app);
-
         $config = $this->getConfig();
 
-        if (isset($config['rulesets']) && isset($config['rulesets'][$app['locale']])) {
-            $slugifyLocaleRuleset = $config['rulesets'][$app['locale']];
-            if (!empty($slugifyLocaleRuleset)) {
-                $app['slugify']->addRuleset($app['locale'], $slugifyLocaleRuleset);
-                $app['slugify']->activateRuleset($app['locale']);
+        $app['slugify.options'] = array_merge_recursive($app['slugify.options'], $config['options']);
+
+        $app['slugify'] = $app->share(
+            function ($app) use ($config) {
+                $slugify = new Slugify($app['slugify.options'], $app['slugify.provider']);
+
+                if (isset($config['ruleset']) && !empty($config['ruleset'])) {
+                    $slugify->activateRuleset($config['ruleset']);
+                }
+
+                if (isset($config['custom_rules']) && !empty($config['custom_rules'])) {
+                    $slugify->addRules($config['custom_rules']);
+                }
+
+                return $slugify;
             }
-        }
-
-        if (isset($config['custom_ruleset']) && !empty($config['custom_ruleset'])) {
-            $app['slugify']->addRuleset('custom_ruleset', $config['custom_ruleset']);
-            $app['slugify']->activateRuleset('custom_ruleset');
-        }
-
-        if (isset($config['regexp'])) {
-            $app['slugify']->setRegExp((bool) $config['regexp']);
-        }
-
-        if (isset($config['options']) && is_array($config['options'])) {
-            $app['slugify']->setOptions($config['options']);
-        }
+        );
     }
-
 }

@@ -1,27 +1,18 @@
-##
-# Rulesets by locales
-##
-rulesets:
-    hu_HU:
-        "ü": "u"
-        "ö": "o"
-        "Ü": "U"
-        "Ö": "O"
+# Ruleset you want to use
+ruleset: hungarian
 
 ##
 # You can define your own ruleset here
 ##
-#custom_ruleset:
+#custom_rules:
 #    "ê": "e"
 #    "ĉ": "cx"
-
-##
-# Regular expression to search for characters to replace
-##
-#regexp: '/([^A-Za-z0-9]|-)+/'
 
 ##
 # Options
 ##
 options:
     lowercase: true # if true, uppercase characters converted to lowercase
+    # regexp: '/([^A-Za-z0-9]|-)+/'
+    # separator: '-'
+    # trim: true

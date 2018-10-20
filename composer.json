@@ -4,7 +4,7 @@
     "type": "bolt-extension",
     "keywords": ["slug", "slugify"],
     "require": {
-        "bolt/bolt": "^3.0|<3.6"
+        "bolt/bolt": "^3.6"
     },
     "authors": [
         {
